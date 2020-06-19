@@ -2,7 +2,7 @@
   <div class="shop_container">
     <ul class="shop_list" v-if="books.length">
       <li class="shop_li border-1px" v-for="(book, index) in books"
-          :key="index" @click="$router.push('/shop')">
+          :key="index" @click="getBookinfo(book.isbn)">
         <a>
           <div class="shop_left">
             <img class="shop_img" :src="book.bookPicture">
@@ -56,7 +56,16 @@
   export default {
     data () {
       return {
+        isbn:'',
         baseImgUrl: 'http://cangdu.org:8001/img/'
+      }
+    },
+    methods: {
+      getBookinfo (isbn) {
+        if(isbn) {
+          this.$store.dispatch('getBookInfo',isbn)
+          this.$router.push('/shop')
+        }
       }
     },
     computed: {

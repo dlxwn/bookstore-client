@@ -2,31 +2,31 @@
   <section class="search">
     <HeaderTop title="搜索"/>
     <form class="search_form" @submit.prevent="search">
-      <input type="search" placeholder="请输入图书名称" class="search_input" v-model="keyword">
+      <input type="search" placeholder="请输入图书名称或作者" class="search_input" v-model="keyword">
       <input type="submit" class="search_submit">
     </form>
-    <section class="list" v-if="!noSearchShops">
+    <section class="list" v-if="!noSearchShops&&keyword!==''">
       <ul class="list_container">
         <!--:to="'/shop?id='+item.id"-->
-        <router-link :to="{path:'/shop', query:{id:item.id}}" tag="li"
-                     v-for="item in searchShops" :key="item.id" class="list_li">
+        <li @click="getBookinfo(item.isbn)" v-for="item in searchShops" :key="item.isbn" class="list_li">
           <section class="item_left">
-            <img :src="imgBaseUrl + item.image_path" class="restaurant_img">
+            <img :src="item.bookPicture" class="restaurant_img">
           </section>
           <section class="item_right">
             <div class="item_right_text">
               <p>
-                <span>{{item.name}}</span>
+                <span class="bold">{{item.bookName}}</span>
               </p>
-              <p>月售 {{item.month_sales||item.recent_order_num}} 单</p>
-              <p>{{item.delivery_fee||item.float_minimum_order_amount}} 元起送 / 距离{{item.distance}}</p>
+              <p>作者：{{item.author}}</p>
+              <p>{{item.price||item.price}} 元</p>
             </div>
           </section>
-        </router-link>
+        </li>
       </ul>
     </section>
 
-    <div class="search_none" v-else>很抱歉！无搜索结果</div>
+    <div class="search_none" v-else-if="keyword!==''">很抱歉！无搜索结果</div>
+    <div class="search_none" v-else>请输入关键字</div>
   </section>
 </template>
 
@@ -38,7 +38,6 @@
     data () {
       return {
         keyword: '',
-        imgBaseUrl: 'http://cangdu.org:8001/img/',
         noSearchShops: false
       }
     },
@@ -54,6 +53,12 @@
         // 进行搜索
         if(keyword) {
           this.$store.dispatch('searchShops', keyword)
+        }
+      },
+      getBookinfo (isbn) {
+        if(isbn) {
+          this.$store.dispatch('getBookInfo',isbn)
+          this.$router.push('/shop')
         }
       }
     },
@@ -76,6 +81,12 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
+  .bold
+    font-weight 700
+    color #333
+  &:last-child
+    border-none()
+
   .search
     width 100%
     height 100%

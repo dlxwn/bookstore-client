@@ -14,4 +14,5 @@ export default {
   cartFoods: [], // 购物车中食物的列表
   searchShops: [], // 搜索得到的商家列表
   books: [], //图书列表
+  bookinfo:{},//图书详情
 }

@@ -14,7 +14,8 @@ import {
   DECREMENT_FOOD_COUNT,
   CLEAR_CART,
   RECEIVE_SEARCH_SHOPS,
-  RECEIVE_BOOKS
+  RECEIVE_BOOKS,
+  RECEIVE_BOOKINFO
 } from './mutation-types'
 import {
   reqAddress,
@@ -26,7 +27,8 @@ import {
   reqShopGoods,
   reqShopInfo,
   reqSearchShop,
-  reqShopBooks
+  reqShopBooks,
+  reqBookInfo
 } from '../api'
 
 export default {
@@ -96,6 +98,15 @@ export default {
     }
   },
 
+  // 异步获取商家信息
+  async getBookInfo({commit},isbn) {
+    const result = await reqBookInfo(isbn)
+    if (result.code === 0) {
+      const bookinfo = result.data
+      commit(RECEIVE_BOOKINFO, {bookinfo})
+    }
+  },
+
   // 异步获取商家评价列表
   async getShopRatings({commit}, callback) {
     const result = await reqShopRatings()
@@ -144,8 +155,7 @@ export default {
   // 异步获取商家商品列表
   async searchShops({commit, state}, keyword) {
 
-    const geohash = state.latitude + ',' + state.longitude
-    const result = await reqSearchShop(geohash, keyword)
+    const result = await reqSearchShop( keyword)
     if (result.code === 0) {
       const searchShops = result.data
       commit(RECEIVE_SEARCH_SHOPS, {searchShops})

@@ -33,8 +33,8 @@
         <h3 class="section-title">图书照片</h3>
         <div class="pic-wrapper">
           <ul class="pic-list" ref="picsUl">
-            <li class="pic-item" v-for="(pic, index) in info.pics" :key="index">
-              <img width="120" height="90" :src="pic"/>
+            <li class="pic-item">
+              <img width="120" height="90" :src="bookinfo.bookPicture"/>
             </li>
           </ul>
         </div>
@@ -45,10 +45,13 @@
       <section class="section">
         <h3 class="section-title">图书信息</h3>
         <ul class="detail">
-          <li><span class="bold">品类</span> <span>{{info.category}}</span></li>
-          <li><span class="bold">图书编号</span> <span>{{info.phone}}</span></li>
-          <li><span class="bold">出版社</span> <span>{{info.address}}</span></li>
-          <li><span class="bold">出版时间</span> <span>{{info.workTime}}</span></li>
+          <li><div class="bold">简介</div></li>
+          <li> <div>{{bookinfo.description}}</div></li>
+          <li><span class="bold">书名</span> <span>{{bookinfo.bookName}}</span></li>
+          <li><span class="bold">作者</span> <span>{{bookinfo.author}}</span></li>
+          <li><span class="bold">价格</span> <span>{{bookinfo.price}}元</span></li>
+          <li><span class="bold">出版社</span> <span>{{bookinfo.press}}</span></li>
+          <li><span class="bold">出版时间</span> <span>{{bookinfo.publicDate}}</span></li>
         </ul>
       </section>
     </div>
@@ -66,7 +69,7 @@
       }
     },
     computed: {
-      ...mapState(['info','books'])
+      ...mapState(['info','books','bookinfo'])
     },
 
     mounted () {

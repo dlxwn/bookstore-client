@@ -23,7 +23,7 @@
               <div class="swiper-slide" v-for="(categorys, index) in categorysArr" :key="index" >
                 <a href="javascript:" class="link_to_food" v-for="(category, index) in categorys" :key="index" @click="$router.push('/shop/goods')">
                   <div class="food_container">
-                    <img :src="category.classPic">
+                    <img :src="category.classPicture">
                   </div>
                   <span>{{category.className}}</span>
                 </a>

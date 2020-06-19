@@ -4,7 +4,7 @@
       <div class="login_header">
         <h2 class="login_logo">网上书城</h2>
         <div class="login_header_title">
-          <a href="javascript:;" :class="{on: loginWay}" @click="loginWay=true">短信登录</a>
+          <a href="javascript:;" :class="{on: loginWay}" @click="loginWay=true">注册</a>
           <a href="javascript:;" :class="{on: !loginWay}" @click="loginWay=false">密码登录</a>
         </div>
       </div>

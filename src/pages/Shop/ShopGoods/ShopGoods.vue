@@ -9,7 +9,7 @@
           <li class="menu-item" v-for="(category, index) in categorys" :key="index"
               :class="{current: index===currentIndex}" @click="clickMenuItem(index)">
             <span class="text bottom-border-1px">
-              <img class="icon" :src="category.classPic" v-if="category.classPic">
+              <img class="icon" :src="category.classPicture" v-if="category.classPicture">
               {{category.className}}
             </span>
           </li>

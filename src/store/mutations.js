@@ -15,7 +15,8 @@ import {
   DECREMENT_FOOD_COUNT,
   CLEAR_CART,
   RECEIVE_SEARCH_SHOPS,
-  RECEIVE_BOOKS
+  RECEIVE_BOOKS,
+  RECEIVE_BOOKINFO
 } from './mutation-types'
 
 export default {
@@ -51,6 +52,9 @@ export default {
   },
   [RECEIVE_BOOKS](state, {books}) {
     state.books = books
+  },
+  [RECEIVE_BOOKINFO](state, {bookinfo}) {
+    state.bookinfo = bookinfo
   },
 
   [INCREMENT_FOOD_COUNT](state, {food}) {
