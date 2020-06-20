@@ -38,11 +38,13 @@
           <span class="block negative" :class="{active: selectType===1}" @click="setSelectType(1)">
             不满意<span class="count">{{ratings.length-positiveSize}}</span>
           </span>
+          <mt-button size="small" @click="addcommit" type="primary" class="block negative" style="background-color: #26A2FF;color: #fff;float: right;">添加评论</mt-button>
         </div>
         <div class="switch" :class="{on: onlyShowText}" @click="toggleOnlyShowText">
           <span class="iconfont icon-check_circle"></span>
           <span class="text">只看有内容的评价</span>
         </div>
+
       </div>
 
       <div class="rating-wrapper">
@@ -53,14 +55,15 @@
             </div>
             <div class="content">
               <h1 class="name">{{rating.username}}</h1>
-              <div class="star-wrapper">
+<!--             <div class="star-wrapper">
                 <Star :score="rating.score" :size="24" />
                 <span class="delivery">{{rating.deliveryTime}}</span>
-              </div>
+              </div> -->
               <p class="text">{{rating.text}}</p>
               <div class="recommend">
-                <span class="iconfont" :class="rating.rateType===0 ? 'icon-thumb_up' : 'icon-thumb_down'"></span>
-                <span class="item" v-for="(item, index) in rating.recommend" :key="index">{{item}}</span>
+                <span @click="likeIncrease" class="iconfont" :class="rating.rateType===0 ? 'icon-thumb_up' : 'icon-thumb_down'">{{like}}</span>
+<!--                <span class="item" v-for="(item, index) in rating.recommend" :key="index">{{item}}</span> -->
+                    <p class="text" style="margin-left: 20px;" v-for="(item, index) in rating.response" :key="index">{{item}}</p>
               </div>
               <div class="time">{{rating.rateTime | date-format}}</div>
             </div>
@@ -83,6 +86,9 @@
       return {
         onlyShowText: true, // 是否只显示有文本的
         selectType: 2 , // 选择的评价类型: 0满意, 1不满意, 2全部
+        commitInput: '',
+        like: 0,
+        flag: 0
       }
     },
     mounted () {
@@ -127,9 +133,26 @@
       },
       toggleOnlyShowText () {
         this.onlyShowText = !this.onlyShowText
+      },
+      addcommit() {
+        this.$messagebox.prompt(' ','请输入评论内容',{inputType:'textarea'}).then(({value,action}) => {
+            if(action == 'confirm'){
+              console.log(value)
+            }else{
+              console.log('取消')
+            }
+        })
+      },
+      likeIncrease(){
+        if(this.flag == 0){
+          this.like++
+          this.flag = 1
+        }else{
+          this.like--
+          this.flag = 0
+        }
       }
     },
-
     components: {
       Star
     },
