@@ -139,7 +139,7 @@
           }
           console.log('我到这里来了')
           // 发送ajax请求密码登陆
-          result = await reqPwdLogin({email, password, verCode})
+          result = await reqPwdLogin(email, password, verCode)
           console.log('找你找半天啊', result)
         // 停止计时
         if(this.computeTime) {
