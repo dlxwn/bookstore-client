@@ -27,7 +27,7 @@ export const reqLogout = () => ajax(BASE_URL+'/logout')
 // 10、图书详情
 export const reqBookInfo = (isbn) => ajax(BASE_URL+'/book/get',{isbn})
 
-
+export const sendOrderList = (orderlist) => ajax(BASE_URL+'/orderlist/add',{orderlist},'POST')
 /**
  * 获取商家信息
  */

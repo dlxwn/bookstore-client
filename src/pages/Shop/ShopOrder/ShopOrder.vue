@@ -32,12 +32,12 @@
   import AlertTip from '../../../components/AlertTip/AlertTip.vue'
   import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../../api'
   import {mapState} from 'vuex'
+  import {sendOrderList} from '../../../api'
 
   export default {
     name: 'ShopOrder',
     data(){
       return {
-        data:'',
         username: '',
         address: '',
         phone: '',
@@ -71,9 +71,29 @@
         this.alertShow = true
         this.alertText = alertText
       },
-      submitOrder() {
+      async submitOrder() {
         if(this.userState == 'success' && this.addressState == 'success' && this.telState == 'success'){
           //表单正确发送请求
+          const orderlist = {
+            "amount": this.amount,
+            "orderName": this.username,
+            "orderTel": this.phone,
+            "orderAddress": this.address
+          }
+          // var orderdetail = {
+          //   userId: this.userId,
+          //   amount: this.amount,
+          //   orderName: this.orderName,
+          //   orderTel: this.orderTel,
+          //   orderAddress: this.orderAddress
+          // }
+          let result = await sendOrderList(orderlist)
+
+          if (result.code=0){
+            alert("提交成功")
+          } else{
+            alert("提交失败")
+          }
 
         }else{
           this.showAlert('请正确填写信息')
