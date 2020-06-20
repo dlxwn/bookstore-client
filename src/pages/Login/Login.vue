@@ -29,20 +29,20 @@
           <div :class="{on: !loginWay}">
             <section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name">
+                <input type="text" maxlength="20" placeholder="邮箱" v-model="email">
               </section>
               <section class="login_verification">
-                <input type="text" maxlength="8" placeholder="密码" v-if="showPwd" v-model="pwd">
-                <input type="password" maxlength="8" placeholder="密码" v-else v-model="pwd">
+                <input type="text" maxlength="8" placeholder="密码" v-if="showPwd" v-model="password">
+                <input type="password" maxlength="8" placeholder="密码" v-else v-model="password">
                 <div class="switch_button" :class="showPwd?'on':'off'" @click="showPwd=!showPwd">
                   <div class="switch_circle" :class="{right: showPwd}"></div>
                   <span class="switch_text">{{showPwd ? 'abc' : '...'}}</span>
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha"
-                  @click="getCaptcha" ref="captcha">
+                <input type="text" maxlength="11" placeholder="验证码" v-model="verCode">
+                <img class="get_verification" src="http://localhost:8088/bookstore/user/verCode" alt="verCode"
+                  @click="getVerCode" ref="verCode">
               </section>
             </section>
           </div>
@@ -70,9 +70,9 @@
         showPwd: false, // 是否显示密码
         phone: '', // 手机号
         code:'', // 短信验证码
-        name: '', // 用户名
-        pwd: '', // 密码
-        captcha: '', // 图形验证码
+        email: '', // 用户名
+        password: '', // 密码
+        verCode: '', // 图形验证码
         alertText: '', // 提示文本
         alertShow: false, // 是否显示警告框
       }
@@ -122,47 +122,31 @@
       // 异步登陆
       async login () {
         let result
-        // 前台表单验证
-        if(this.loginWay) {  // 短信登陆
-          const {rightPhone, phone, code} = this
-          if(!this.rightPhone) {
-            // 手机号不正确
-            this.showAlert('手机号不正确')
-            return
-          } else if(!/^\d{6}$/.test(code)) {
-            // 验证必须是6位数字
-            this.showAlert('验证必须是6位数字')
-            return
-          }
-          // 发送ajax请求短信登陆
-          result = await reqSmsLogin(phone, code)
-
-        } else {// 密码登陆
-          const {name, pwd, captcha} = this
-          if(!this.name) {
+          const {email, password, verCode} = this
+          console.log('hahahhahahahahhahahha', email, 'jjjjjjjjjjjjj', password, ' jggjgghggg' , verCode)
+          if(!this.email) {
             // 用户名必须指定
-            this.showAlert('用户名必须指定')
+            this.showAlert('请输入用户名!')
             return
-          } else if(!this.pwd) {
+          } else if(!this.password) {
             // 密码必须指定
-            this.showAlert('密码必须指定')
+            this.showAlert('请输入密码！')
             return
-          } else if(!this.captcha) {
+          } else if(!this.verCode) {
             // 验证码必须指定
-            this.showAlert('验证码必须指定')
+            this.showAlert('请输入验证码！')
             return
           }
+          console.log('我到这里来了')
           // 发送ajax请求密码登陆
-          result = await reqPwdLogin({name, pwd, captcha})
-        }
-
+          result = await reqPwdLogin({email, password, verCode})
+          console.log('找你找半天啊', result)
         // 停止计时
         if(this.computeTime) {
           this.computeTime = 0
           clearInterval(this.intervalId)
           this.intervalId = undefined
         }
-
         // 根据结果数据处理
         if(result.code===0) {
           const user = result.data
@@ -172,7 +156,7 @@
           this.$router.replace('/profile')
         } else {
           // 显示新的图片验证码
-          this.getCaptcha()
+          this.getVerCode()
           // 显示警告提示
           const msg = result.msg
           this.showAlert(msg)
@@ -184,9 +168,9 @@
         this.alertText = ''
       },
       // 获取一个新的图片验证码
-      getCaptcha () {
+      getVerCode () {
         // 每次指定的src要不一样
-        this.$refs.captcha.src = 'http://localhost:4000/captcha?time='+Date.now()
+        this.$refs.verCode.src = 'http://localhost:8088/bookstore/user/verCode?time='+Date.now()
       }
     },
 

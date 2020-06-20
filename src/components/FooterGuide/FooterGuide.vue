@@ -4,7 +4,7 @@
       <span class="item_icon">
         <i class="iconfont icon-waimai"></i>
       </span>
-      <span>图书</span>
+      <span>首页</span>
     </span>
     <a href="javascript:;" class="guide_item" :class="{on: '/search'===$route.path}" @click="goTo('/search')">
       <span class="item_icon">
