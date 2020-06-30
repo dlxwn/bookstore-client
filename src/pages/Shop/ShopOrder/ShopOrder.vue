@@ -23,7 +23,8 @@
       <input style="width: 50px; height: 100%;" v-model="num" />
     </mt-cell>
     <mt-cell title="应付金额(元):">{{amount * bookinfo.price}}</mt-cell>
-    <mt-button type="primary" size="large" @click="submitOrder(userInfo,bookinfo)">提交订单</mt-button>
+    <mt-button type="primary" size="large" @click="submitOrder(userInfo,bookinfo)" v-if="userInfo.userId">提交订单</mt-button>
+      <mt-button type="primary" size="large" v-else>请登录</mt-button>
     </section>
       </div>
     </div>
