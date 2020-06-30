@@ -1142,7 +1142,7 @@
       "deliveryTime": 30,
       "score": 5,
       "rateType": 0,
-      "text": "不错,粥很好喝,我经常吃这一家,非常赞,以后也会常来吃,强烈推荐.",
+      "text": "不错，书很好看，物流也很快，良心推荐这家店铺",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
         "南瓜粥",
@@ -1152,9 +1152,9 @@
         "牛肉馅饼"
       ],
 	  "response": [
-		  "用户A@用户B：????",
+		  "用户A@用户B：????我的书一个星期才到你和我说这家店铺物流很棒？",
 		  "用户B@用户A：你啥子意思嘛?",
-		  "用户A@用户B：我他妈直接嘲笑"
+		  "用户A@用户B：我他妈直接差评"
 	  ]
     },
     {
@@ -1164,10 +1164,13 @@
       "score": 4,
       "rateType": 0,
       "deliveryTime": "",
-      "text": "服务态度不错",
+      "text": "封面外皮什么的看着都挺好的，知识有一本外皮有些瑕疵，不影响观看，这么便宜就可以买到这莫好的书，以后每天可以跟宝宝讲故事了",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
         "扁豆焖面"
+      ],
+      "response": [
+        "用户A@用户B：我感觉还是有点子贵"
       ]
     },
     {
@@ -1215,7 +1218,7 @@
       "deliveryTime": 30,
       "score": 5,
       "rateType": 0,
-      "text": "很喜欢的粥店",
+      "text": "很喜欢的书店",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1225,7 +1228,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "量给的还可以",
+      "text": "挺好的就是有点小小的贵",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1245,10 +1248,15 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "孩子喜欢吃这家",
+      "text": "书是好书，包装完好无损，只是一买回家就开始降价有点不开心",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
         "南瓜粥"
+      ],
+      "response": [
+        "用户A@用户B：顶",
+        "用户B@用户A：哈哈哈你也是嘛",
+        "用户A@用户B：果然都是天选之人"
       ]
     },
     {
@@ -1257,7 +1265,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "粥挺好吃的",
+      "text": "好书好书好书好书好书好书好书好书好书好书好书好书好书好书好书好书好书好书",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1277,7 +1285,7 @@
       "deliveryTime": 15,
       "score": 5,
       "rateType": 0,
-      "text": "送货速度很快",
+      "text": "大河之剑天上来",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1297,7 +1305,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "下雨天给快递小哥点个赞",
+      "text": "质量一般 有一股不太好闻的味道 还是习惯好评好评好评好评好评好评好评好评好评好评好评好评",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1317,9 +1325,12 @@
       "deliveryTime": "",
       "score": 5,
       "rateType": 0,
-      "text": "吃了还想再吃",
+      "text": "书的质量真的很棒，质优价廉，买了还想买",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-      "recommend": []
+      "recommend": [],
+      "response": [
+        "用户A@用户B：你看你是没有闻到书上的酸味"
+      ]
     },
     {
       "username": "n******b",
@@ -1337,7 +1348,7 @@
       "deliveryTime": 30,
       "score": 5,
       "rateType": 0,
-      "text": "好吃",
+      "text": "好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看好看",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1347,7 +1358,7 @@
       "deliveryTime": 40,
       "score": 5,
       "rateType": 0,
-      "text": "还不错吧",
+      "text": "还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧还不错吧",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1367,7 +1378,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "很喜欢的粥",
+      "text": "很喜欢的书店，以后会回购的！！！！！！！！！！！",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
