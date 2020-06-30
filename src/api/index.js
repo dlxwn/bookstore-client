@@ -16,6 +16,8 @@ export const reqShops = (longitude, latitude) => ajax(BASE_URL+'/shops', {longit
 export const reqSearchShop = (keyword) => ajax(BASE_URL+'/book/getFuzzy', {keyword})
 // 6、用户名密码登陆
 export const reqPwdLogin = (email, password, verCode) => ajax(BASE_URL+'/user/userLogin', {email, password, verCode}, 'POST')
+//注册
+export const reqRegLogin = (z_email, z_user, z_tel, z_pass, z_name, z_sex)=> ajax(BASE_URL+'/user/register', {z_email, z_user, z_tel, z_pass, z_name, z_sex}, 'POST')
 // 7、发送短信验证码
 export const reqSendCode = (phone) => ajax(BASE_URL+'/sendcode', {phone})
 // 8、手机号验证码登陆
@@ -27,7 +29,7 @@ export const reqLogout = () => ajax(BASE_URL+'/user/userLogout')
 // 10、图书详情
 export const reqBookInfo = (isbn) => ajax(BASE_URL+'/book/get',{isbn})
 
-export const sendOrderList = (orderlist) => ajax(BASE_URL+'/orderlist/add',{orderlist},'GET')
+export const sendOrderList = (orderlist) => ajax(BASE_URL+'/orderlist/add',{orderlist},'POST')
 /**
  * 获取商家信息
  */

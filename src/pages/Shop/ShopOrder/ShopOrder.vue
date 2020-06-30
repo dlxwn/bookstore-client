@@ -23,7 +23,7 @@
       <input style="width: 50px; height: 100%;" v-model="num" />
     </mt-cell>
     <mt-cell title="应付金额(元):">{{amount * bookinfo.price}}</mt-cell>
-    <mt-button type="primary" size="large" @click="submitOrder">提交订单</mt-button>
+    <mt-button type="primary" size="large" @click="submitOrder(userInfo,bookinfo)">提交订单</mt-button>
     </section>
       </div>
     </div>
@@ -51,8 +51,8 @@
       }
     },
     computed: {
-      ...mapState(['info','bookinfo']),
-      amount: function(){
+      ...mapState(['info','bookinfo','userInfo']),
+      amount: function(bookinfo){
         return this.num;
       }
     },
@@ -84,17 +84,19 @@
         const count = this.info.pics.length
         ul.style.width = (liWidth + space) * count -space + 'px'
       },
-      async submitOrder() {
+      async submitOrder(userInfo,bookinfo) {
         if(this.userState == 'success' && this.addressState == 'success' && this.telState == 'success'){
           //表单正确发送请求
           var orderlist = {
-            "amount": this.amount,
+            "userId" : userInfo.userId,
+            "amount": this.amount*bookinfo.price,
             "orderName": this.username,
             "orderTel": this.phone,
-            "orderAddress": this.address
+            "orderAddress": this.address,
+            "orderDate": Date.now()
           }
           let result = await sendOrderList(orderlist)
-          if (result.code=0){
+          if (result.code === 0){
             alert("提交成功")
           } else{
             alert("提交失败")

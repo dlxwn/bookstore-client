@@ -68,7 +68,7 @@
 
 <script>
   import AlertTip from '../../components/AlertTip/AlertTip.vue'
-  import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../api'
+  import {reqSendCode, reqRegLogin, reqPwdLogin} from '../../api'
   export default {
     data () {
       return {
@@ -153,7 +153,7 @@
             return
           }
           // 发送ajax请求密码登陆
-          result = await reqPwdLogin({email, password, verCode})
+          result = await reqPwdLogin(email, password, verCode)
         // 停止计时
         if(this.computeTime) {
           this.computeTime = 0
@@ -200,6 +200,20 @@
             return
           }
           // 用ajsx传值进行注册，注册成功之后自动登陆
+          result = await reqRegLogin(z_email, z_user, z_tel, z_pass, z_name, z_sex)
+
+          // 根据结果数据处理
+          if(result.code===0) {
+            const user = result.data
+            // 将user保存到vuex的state
+            this.$store.dispatch('recordUser', user)
+            // 去个人中心界面
+            this.$router.replace('/profile')
+          } else {
+            // 显示警告提示
+            const msg = result.msg
+            this.showAlert(msg)
+          }
       }
       },
       // 关闭警告框
