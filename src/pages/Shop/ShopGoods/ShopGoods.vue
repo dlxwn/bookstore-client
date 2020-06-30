@@ -17,27 +17,27 @@
       </div>
       <div class="foods-wrapper">
         <ul ref="foodsUl">
-          <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
-            <h1 class="title">{{good.name}}</h1>
+          <li class="food-list-hook" v-for="(cbook, index) in classbooks" :key="index">
+            <h1 class="title">{{cbook.classname}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods"
-                  :key="index" @click="showFood(food)">
+              <li class="food-item bottom-border-1px" v-for="(book, index) in cbook.books"
+                  :key="index" @click="getBookinfo(book.isbn)">
                 <div class="icon">
-                  <img width="57" height="57" :src="food.icon">
+                  <img width="57" height="57" :src="book.bookPicture">
                 </div>
                 <div class="content">
-                  <h2 class="name">{{food.name}}</h2>
-                  <p class="desc">{{food.description}}</p>
+                  <h2 class="name">{{book.bookName}}</h2>
+                  <p class="desc">{{book.author}}</p>
                   <div class="extra">
-                    <span class="count">月售{{food.sellCount}}份</span>
-                    <span>好评率{{food.rating}}%</span>
+                    <span class="count">月售{{book.saleNum}}份</span>
+                    <span>好评率{{book.cllectNum}}%</span>
                   </div>
                   <div class="price">
-                    <span class="now">￥{{food.price}}</span>
-                    <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                    <span class="now">￥{{book.price}}</span>
+<!--                    <span class="old" v-if="book.oldPrice">￥{{book.oldPrice}}</span>-->
                   </div>
                   <div class="cartcontrol-wrapper">
-                    <CartControl :food="food"/>
+                    <CartControl :book="book"/>
                   </div>
                 </div>
               </li>
@@ -47,7 +47,7 @@
       </div>
       <ShopCart />
     </div>
-    <Food :food="food" ref="food"/>
+<!--    <Food :book="book" ref="food"/>-->
   </div>
 </template>
 
@@ -56,13 +56,14 @@
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
   import CartControl from '../../../components/CartControl/CartControl.vue'
-  import Food from '../../../components/Food/Food.vue'
+  // import Food from '../../../components/Food/Food.vue'
   import ShopCart from '../../../components/ShopCart/ShopCart.vue'
   import ShopHeader from '../../../components/ShopHeader/ShopHeader.vue'
 
   export default {
     data() {
       return {
+        isbn:'',
         scrollY: 0, // 右侧滑动的Y轴坐标 (滑动过程时实时变化)
         tops: [], // 所有右侧分类li的top组成的数组  (列表第一次显示后就不再变化)
         food: {}, // 需要显示的food
@@ -71,7 +72,7 @@
     mounted() {
       this.$store.dispatch('getCategorys')
       this.$store.dispatch('getShopInfo')
-      this.$store.dispatch('getShopGoods', () => {// 数据更新后执行
+      this.$store.dispatch('getClassBooks', () => {// 数据更新后执行
         this.$nextTick(() => { // 列表数据更新显示后执行
 
           this._initScroll()
@@ -81,7 +82,7 @@
 
     },
     computed: {
-      ...mapState(['goods','userInfo','categorys']),
+      ...mapState(['userInfo','categorys','classbooks']),
 
       // 计算得到当前分类的下标
       currentIndex() {// 初始和相关数据发生了变化
@@ -98,6 +99,12 @@
     },
 
     methods: {
+      getBookinfo (isbn) {
+        if(isbn) {
+          this.$store.dispatch('getBookInfo',isbn)
+          this.$router.push('/shop')
+        }
+      },
       // 初始化滚动
       _initScroll() {
         // 列表显示之后创建
@@ -163,7 +170,7 @@
 
     components: {
       CartControl,
-      Food,
+      // Food,
       ShopCart,
       ShopHeader
     }

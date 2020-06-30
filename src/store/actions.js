@@ -15,7 +15,8 @@ import {
   CLEAR_CART,
   RECEIVE_SEARCH_SHOPS,
   RECEIVE_BOOKS,
-  RECEIVE_BOOKINFO
+  RECEIVE_BOOKINFO,
+  RECEIVE_CLASS_BOOKS
 } from './mutation-types'
 import {
   reqAddress,
@@ -28,7 +29,8 @@ import {
   reqShopInfo,
   reqSearchShop,
   reqShopBooks,
-  reqBookInfo
+  reqBookInfo,
+  reqClassBooks
 } from '../api'
 
 export default {
@@ -84,7 +86,7 @@ export default {
   // 异步登出
   async logout({commit}) {
     const result = await reqLogout()
-    if (result.code === 0) {
+    if (result.code === 200) {
       commit(RESET_USER_INFO)
     }
   },
@@ -119,15 +121,15 @@ export default {
   },
 
   // 异步获取商家商品列表
-  async getShopGoods({commit}, callback) {
-    const result = await reqShopGoods()
-    if (result.code === 0) {
-      const goods = result.data
-      commit(RECEIVE_GOODS, {goods})
-      // 数据更新了, 通知一下组件
-      callback && callback()
-    }
-  },
+  // async getShopGoods({commit}, callback) {
+  //   const result = await reqShopGoods()
+  //   if (result.code === 0) {
+  //     const goods = result.data
+  //     commit(RECEIVE_GOODS, {goods})
+  //     // 数据更新了, 通知一下组件
+  //     callback && callback()
+  //   }
+  // },
 
   // 异步获取图书列表
   async getShopBooks({commit}) {
@@ -139,11 +141,11 @@ export default {
   },
 
   // 同步更新food中的count值
-  updateFoodCount({commit}, {isAdd, food}) {
+  updateFoodCount({commit}, {isAdd, book}) {
     if (isAdd) {
-      commit(INCREMENT_FOOD_COUNT, {food})
+      commit(INCREMENT_FOOD_COUNT, {book})
     } else {
-      commit(DECREMENT_FOOD_COUNT, {food})
+      commit(DECREMENT_FOOD_COUNT, {book})
     }
   },
 
@@ -152,7 +154,7 @@ export default {
     commit(CLEAR_CART)
   },
 
-  // 异步获取商家商品列表
+  // 异步获取搜索列表
   async searchShops({commit, state}, keyword) {
 
     const result = await reqSearchShop( keyword)
@@ -160,5 +162,14 @@ export default {
       const searchShops = result.data
       commit(RECEIVE_SEARCH_SHOPS, {searchShops})
     }
+  },
+  // 异步获取图书分类列表
+  async getClassBooks({commit}, callback) {
+
+    const result = await reqClassBooks()
+    const classbooks = result
+    commit(RECEIVE_CLASS_BOOKS, {classbooks})
+    // 数据更新了, 通知一下组件
+        callback && callback()
   },
 }

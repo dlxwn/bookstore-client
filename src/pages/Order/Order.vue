@@ -1,17 +1,26 @@
 <template>
   <section class="order">
     <HeaderTop title="订单列表"/>
-    <section class="order_no_login">
+    <section class="order_no_login" v-if="!userInfo.userId">
       <img src="./images/person.png">
       <h3>登录后查看外卖订单</h3>
       <button>立即登陆</button>
+    </section>
+    <section class="order_no_login" v-else>
+      好多好多订单
     </section>
   </section>
 </template>
 
 <script>
   import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+  import BScroll from 'better-scroll'
+  import {mapState} from 'vuex'
+
   export default {
+    computed: {
+      ...mapState(['userInfo']),
+    },
     components: {
       HeaderTop
     }

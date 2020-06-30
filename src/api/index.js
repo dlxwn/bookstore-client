@@ -23,7 +23,7 @@ export const reqSmsLogin = (phone, code) => ajax(BASE_URL+'/login_sms', {phone, 
 // 9、根据会话获取用户信息
 export const reqUserInfo = () => ajax(BASE_URL+'/userinfo')
 // 10、用户登出
-export const reqLogout = () => ajax(BASE_URL+'/user//userLogout')
+export const reqLogout = () => ajax(BASE_URL+'/user/userLogout')
 // 10、图书详情
 export const reqBookInfo = (isbn) => ajax(BASE_URL+'/book/get',{isbn})
 
@@ -41,7 +41,12 @@ export const reqShopRatings = () => ajax('/ratings')
 /**
  * 获取商家商品数组
  */
-export const reqShopGoods = () => ajax('/goods')
+// export const reqShopGoods = () => ajax('/goods')
+
+/**
+ * 获取商家图书分类
+ */
+export const reqClassBooks = () => ajax(BASE_URL+'/book/getBookInfo')
 
 /**
  * 获取商家商品数组

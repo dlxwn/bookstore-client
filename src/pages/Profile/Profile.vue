@@ -2,17 +2,20 @@
   <section class="profile">
     <HeaderTop title="我的"/>
     <section class="profile-number">
-      <router-link :to="userInfo._id ? '/userinfo': '/login'" class="profile-link">
-        <div class="profile_image">
+      <router-link :to="userInfo.userId ? '/userinfo': '/login'" class="profile-link">
+        <div class="profile_image"  v-if="!userInfo.avatar">
           <i class="iconfont icon-person"></i>
         </div>
+        <div class="profile_image" v-else>
+          <img class="myimg" :src="userInfo.avatar"/>
+        </div>
         <div class="user-info">
-          <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || '登录/注册'}}</p>
+          <p class="user-info-top">{{userInfo.nickName || '登录/注册'}}</p>
           <p>
                 <span class="user-icon">
                   <i class="iconfont icon-shouji icon-mobile"></i>
                 </span>
-            <span class="icon-mobile-number">{{userInfo.phone || '暂无绑定手机号'}}</span>
+            <span class="icon-mobile-number">{{userInfo.phoneNumber || '暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -31,7 +34,7 @@
           <span class="info_data_bottom">我的优惠</span>
         </a>
         <a href="javascript:" class="info_data_link">
-          <span class="info_data_top"><span>0</span>分</span>
+          <span class="info_data_top"><span>{{userInfo.integral || 0}}</span>分</span>
           <span class="info_data_bottom">我的积分</span>
         </a>
       </ul>
@@ -67,7 +70,7 @@
               <i class="iconfont icon-vip"></i>
             </span>
         <div class="my_order_div">
-          <span>硅谷外卖会员卡</span>
+          <span>网上书店会员卡</span>
           <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
@@ -90,7 +93,7 @@
     </section>
 
     <section class="profile_my_order border-1px">
-      <mt-button type="danger" style="width: 100%" v-if="userInfo._id" @click="logout">退出登陆</mt-button>
+      <mt-button type="danger" style="width: 100%" v-if="userInfo.userId" @click="logout">退出登陆</mt-button>
     </section>
   </section>
 </template>
@@ -186,6 +189,9 @@
           .icon-person
             background #e4e4e4
             font-size 62px
+          .myimg
+            width  62px
+            height 62px
         .user-info
           float left
           margin-top 8px

@@ -26,11 +26,11 @@
           </div>
           <div class="list-content">
             <ul>
-              <li class="food" v-for="(food, index) in cartFoods" :key="index">
-                <span class="name">{{food.name}}</span>
-                <div class="price"><span>￥{{food.price}}</span></div>
+              <li class="food" v-for="(book, index) in cartFoods" :key="index">
+                <span class="name">{{book.bookName}}</span>
+                <div class="price"><span>￥{{book.price}}</span></div>
                 <div class="cartcontrol-wrapper">
-                  <CartControl :food="food"/>
+                  <CartControl :book="book"/>
                 </div>
               </li>
             </ul>
@@ -61,17 +61,13 @@
       ...mapGetters(['totalCount', 'totalPrice']),
       payClass () {
         const {totalPrice} = this
-        const {minPrice} = this.info
 
-        return totalPrice>=minPrice ? 'enough' : 'not-enough'
+        return totalPrice>=0 ? 'enough' : 'not-enough'
       },
       payText () {
         const {totalPrice} = this
-        const {minPrice} = this.info
         if(totalPrice===0) {
-          return `￥${minPrice}元起送`
-        } else if(totalPrice<minPrice) {
-          return `还差￥${minPrice-totalPrice}元起送`
+          return `空空的购物车`
         } else {
           return '结算'
         }

@@ -49,7 +49,7 @@
       }
     },
     computed: {
-      ...mapState(['info'])
+      ...mapState(['info','bookinfo'])
     },
     watch:{
        username(newVal,oldVal){

@@ -5,13 +5,16 @@
       <router-link class="header_search" slot="left" to="/search">
         <i class="iconfont icon-sousuo"></i>
       </router-link>
-      <router-link class="header_login" slot="right" :to="userInfo._id ? '/userinfo': '/login'">
-        <span class="header_login_text" v-if="!userInfo._id">
+      <router-link class="header_login" slot="right" :to="userInfo.userId ? '/userinfo': '/login'">
+        <span class="header_login_text" v-if="!userInfo.userId">
           登录|注册
         </span>
-        <span class="header_login_text" v-else>
-           <i class="iconfont icon-person"></i>
-        </span>
+        <div class="profile_image"  v-else-if="!userInfo.avatar">
+          <i class="iconfont icon-person"></i>
+        </div>
+        <div class="profile_image" v-else>
+          <img class="myimg2" :src="userInfo.avatar"/>
+        </div>
       </router-link>
     </HeaderTop>
     <div class="miste-content-wrapper">
@@ -145,6 +148,20 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
+
+  .profile_image
+    float right
+    width 30px
+    height 30px
+    border-radius 50%
+    overflow hidden
+    vertical-align top
+    .icon-person
+      background #e4e4e4
+      font-size 62px
+    .myimg2
+      width  30px
+      height 30px
   .msite  //首页
     width 100%
     .miste-content-wrapper

@@ -15,4 +15,5 @@ export default {
   searchShops: [], // 搜索得到的商家列表
   books: [], //图书列表
   bookinfo:{},//图书详情
+  classbooks: [], //分类的图书列表
 }
