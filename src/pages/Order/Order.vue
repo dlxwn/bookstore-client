@@ -4,10 +4,27 @@
     <section class="order_no_login" v-if="!userInfo.userId">
       <img src="./images/person.png">
       <h3>登录后查看外卖订单</h3>
-      <button>立即登陆</button>
+      <button @click="to_login">立即登陆</button>
     </section>
-    <section class="order_no_login" v-else>
-      好多好多订单
+    <section style="width: 100%; margin-top: 40px;" v-else>
+      <mt-cell title="订单编号:" >01</mt-cell>
+      <mt-cell title="购买物品:" >克隆版大脑</mt-cell>
+      <mt-cell title="购买数量:" >10</mt-cell>
+      <mt-cell title="购买单价(元):" >29.1</mt-cell>
+      <mt-cell title="总价格(元):" >291</mt-cell>
+      <p style="color: #6AC20B;">--------------------华丽的分割线--------------------</p>
+      <mt-cell title="订单编号:" >02</mt-cell>
+      <mt-cell title="购买物品:" >十万个为什么</mt-cell>
+      <mt-cell title="购买数量:" >1</mt-cell>
+      <mt-cell title="购买单价(元):" >33.1</mt-cell>
+      <mt-cell title="总价格(元):" >33.1</mt-cell>
+      <p style="color: #6AC20B;">--------------------华丽的分割线--------------------</p>
+      <mt-cell title="订单编号:" >03</mt-cell>
+      <mt-cell title="购买物品:" >一千零一夜</mt-cell>
+      <mt-cell title="购买数量:" >2</mt-cell>
+      <mt-cell title="购买单价(元):" >19.8</mt-cell>
+      <mt-cell title="总价格(元):" >39.6</mt-cell>
+      <br /><br /><br />
     </section>
   </section>
 </template>
@@ -23,6 +40,11 @@
     },
     components: {
       HeaderTop
+    },
+    methods: {
+      to_login(){
+        this.$router.replace('/login')
+      }
     }
   }
 </script>
