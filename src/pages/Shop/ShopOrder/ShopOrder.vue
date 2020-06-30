@@ -18,8 +18,11 @@
     <mt-field label="收货人姓名" placeholder="请输入姓名" v-model="username" :state="userState"></mt-field>
     <mt-field label="收件人地址" placeholder="请输入地址" v-model="address" :state="addressState"></mt-field>
     <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" :state="telState"></mt-field>
-    <mt-cell title="商品数量(本):" v-model=num></mt-cell>
-    <mt-cell title="应付金额(元):" v-model=amount></mt-cell>
+    <mt-cell title="商品单价(元):" v-model=bookinfo.price></mt-cell>
+    <mt-cell title="商品数量(本):">
+      <input style="width: 50px; height: 100%;" v-model="num" />
+    </mt-cell>
+    <mt-cell title="应付金额(元):">{{amount * bookinfo.price}}</mt-cell>
     <mt-button type="primary" size="large" @click="submitOrder">提交订单</mt-button>
     </section>
       </div>
@@ -33,7 +36,7 @@
   import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../../api'
   import {mapState} from 'vuex'
   import {sendOrderList} from '../../../api'
-
+  import BScroll from 'better-scroll'
   export default {
     name: 'ShopOrder',
     data(){
@@ -41,15 +44,17 @@
         username: '',
         address: '',
         phone: '',
-        num: 12,
-        amount: 123.5,
+        num: '10',
         userState: '',
         addressState: '',
         telState: ''
       }
     },
     computed: {
-      ...mapState(['info'])
+      ...mapState(['info','bookinfo']),
+      amount: function(){
+        return this.num;
+      }
     },
     watch:{
        username(newVal,oldVal){
@@ -66,29 +71,29 @@
          else this.telState = 'success'
        }
     },
+    mounted() {
+      this._initScroll()
+    },
     methods:{
-      showAlert(alertText) {
-        this.alertShow = true
-        this.alertText = alertText
+      _initScroll () {
+        new BScroll('.shop-info')
+        // 动态计算ul的宽度
+        const ul = this.$refs.picsUl
+        const liWidth = 120
+        const space = 6
+        const count = this.info.pics.length
+        ul.style.width = (liWidth + space) * count -space + 'px'
       },
       async submitOrder() {
         if(this.userState == 'success' && this.addressState == 'success' && this.telState == 'success'){
           //表单正确发送请求
-          const orderlist = {
+          var orderlist = {
             "amount": this.amount,
             "orderName": this.username,
             "orderTel": this.phone,
             "orderAddress": this.address
           }
-          // var orderdetail = {
-          //   userId: this.userId,
-          //   amount: this.amount,
-          //   orderName: this.orderName,
-          //   orderTel: this.orderTel,
-          //   orderAddress: this.orderAddress
-          // }
           let result = await sendOrderList(orderlist)
-
           if (result.code=0){
             alert("提交成功")
           } else{
@@ -108,7 +113,6 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/mixins.styl"
-
   .bold
     font-weight 700
     color #333

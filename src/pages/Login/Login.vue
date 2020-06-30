@@ -12,14 +12,22 @@
         <form @submit.prevent="login">
           <div :class="{on: loginWay}">
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
-              <button :disabled="!rightPhone" class="get_verification"
-                      :class="{right_phone: rightPhone}" @click.prevent="getCode">
-                {{computeTime>0 ? `已发送(${computeTime}s)` : '获取验证码'}}
-              </button>
+              <input type="email" maxlength="20" placeholder="邮箱" v-model="z_email">
             </section>
             <section class="login_verification">
-              <input type="tel" maxlength="8" placeholder="验证码" v-model="code">
+              <input type="text" maxlength="10" placeholder="用户名" v-model="z_user">
+            </section>
+            <section class="login_verification">
+              <input type="tel" maxlength="11" placeholder="电话" v-model="z_tel">
+            </section>
+            <section class="login_verification">
+              <input type="password" maxlength="16" placeholder="密码" v-model="z_pass">
+            </section>
+            <section class="login_verification">
+              <input type="text" maxlength="10" placeholder="真实姓名" v-model="z_name">
+            </section>
+            <section class="login_verification">
+              <input type="text" maxlength="8" placeholder="性别" v-model="z_sex">
             </section>
             <section class="login_hint">
               温馨提示：未注册网上书店帐号的手机号，登录时将自动注册，且代表已同意
@@ -46,7 +54,7 @@
               </section>
             </section>
           </div>
-          <button class="login_submit">登录</button>
+          <button class="login_submit">登陆</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -54,7 +62,6 @@
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
-
     <AlertTip :alertText="alertText" v-show="alertShow" @closeTip="closeTip"/>
   </section>
 </template>
@@ -65,7 +72,7 @@
   export default {
     data () {
       return {
-        loginWay: false, // true代表短信登陆, false代表密码
+        loginWay: false, // true代表注册, false代表密码
         computeTime: 0, // 计时的时间
         showPwd: false, // 是否显示密码
         phone: '', // 手机号
@@ -75,6 +82,13 @@
         verCode: '', // 图形验证码
         alertText: '', // 提示文本
         alertShow: false, // 是否显示警告框
+        // 注册的部分
+        z_email: '',
+        z_user: '',
+        z_tel: '',
+        z_pass: '',
+        z_name: '',
+        z_sex: ''
       }
     },
 
@@ -121,12 +135,13 @@
       },
       // 异步登陆
       async login () {
+        if(!this.loginWay){
         let result
           const {email, password, verCode} = this
-          console.log('hahahhahahahahhahahha', email, 'jjjjjjjjjjjjj', password, ' jggjgghggg' , verCode)
+          // console.log('hahahhahahahahhahahha', email, 'jjjjjjjjjjjjj', password, ' jggjgghggg' , verCode)
           if(!this.email) {
             // 用户名必须指定
-            this.showAlert('请输入用户名!')
+            this.showAlert('请输入邮箱!')
             return
           } else if(!this.password) {
             // 密码必须指定
@@ -137,10 +152,8 @@
             this.showAlert('请输入验证码！')
             return
           }
-          console.log('我到这里来了')
           // 发送ajax请求密码登陆
           result = await reqPwdLogin({email, password, verCode})
-          console.log('找你找半天啊', result)
         // 停止计时
         if(this.computeTime) {
           this.computeTime = 0
@@ -161,6 +174,33 @@
           const msg = result.msg
           this.showAlert(msg)
         }
+      } else {    //注册的页面
+        let result
+          const {z_email, z_user, z_tel, z_pass, z_name, z_sex} = this
+          if(!this.z_email) {
+            // 用户名必须指定
+            this.showAlert('请输入邮箱!')
+            return
+          }else if(!this.z_user) {
+            // 密码必须指定
+            this.showAlert('请输入用户名！')
+            return
+          } else if(!this.z_tel) {
+            // 验证码必须指定
+            this.showAlert('请输入电话！')
+            return
+          } else if(!this.z_pass) {
+            this.showAlert('请输入密码')
+            return
+          } else if(!this.z_name) {
+            this.showAlert('请输入真实姓名')
+            return
+          } else if(!this.z_sex) {
+            this.showAlert('请输入性别')
+            return
+          }
+          // 用ajsx传值进行注册，注册成功之后自动登陆
+      }
       },
       // 关闭警告框
       closeTip () {
