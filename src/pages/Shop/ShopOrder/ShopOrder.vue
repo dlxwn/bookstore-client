@@ -7,7 +7,7 @@
       <div class="delivery">
         <div>
           <span class="delivery-icon">{{info.description}}</span>
-          <span>由店家配送提供配送，约{{info.deliveryTime}}天送达，距离{{info.distance}}</span>
+          <span>由店家配送提供配送</span>
         </div>
         <div class="delivery-money">配送费￥{{info.deliveryPrice}}</div>
       </div>
@@ -53,7 +53,7 @@
     },
     computed: {
       ...mapState(['info','bookinfo','userInfo']),
-      amount: function(bookinfo){
+      amount: function(){
         return this.num;
       }
     },
