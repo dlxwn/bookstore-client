@@ -3,7 +3,7 @@
 函数的返回值: promise对象
  */
 import ajax from './ajax'
-const BASE_URL = 'http://localhost:8088/bookstore'
+const BASE_URL = 'http://localhost:8087/bookstore'
 // const BASE_URL = '/bookstore'
 
 // 1、根据经纬度获取位置详情
@@ -15,9 +15,9 @@ export const reqShops = (longitude, latitude) => ajax(BASE_URL+'/shops', {longit
 // 4、根据关键字搜索图书列表
 export const reqSearchShop = (keyword) => ajax(BASE_URL+'/book/getFuzzy', {keyword})
 // 6、用户名密码登陆
-export const reqPwdLogin = (email, password, verCode) => ajax(BASE_URL+'/user/userLogin', {email, password, verCode}, 'POST')
+export const reqPwdLogin = (email, userPassword, verCode) => ajax(BASE_URL+'/user/userLogin', {email, userPassword, verCode}, 'POST')
 //注册
-export const reqRegLogin = (z_email, z_user, z_tel, z_pass, z_name, z_sex)=> ajax(BASE_URL+'/user/register', {z_email, z_user, z_tel, z_pass, z_name, z_sex}, 'POST')
+export const reqRegLogin = (email, nickName, phoneNumber, userPassword, name, sex)=> ajax(BASE_URL+'/user/register', {email, nickName, phoneNumber, userPassword, name, sex}, 'POST')
 // 7、发送短信验证码
 export const reqSendCode = (phone) => ajax(BASE_URL+'/sendcode', {phone})
 // 8、手机号验证码登陆
@@ -26,8 +26,9 @@ export const reqSmsLogin = (phone, code) => ajax(BASE_URL+'/login_sms', {phone, 
 export const reqUserInfo = () => ajax(BASE_URL+'/userinfo')
 // 10、用户登出
 export const reqLogout = () => ajax(BASE_URL+'/user/userLogout')
-// 10、图书详情
+// 11、图书详情
 export const reqBookInfo = (isbn) => ajax(BASE_URL+'/book/get',{isbn})
+
 
 export const sendOrderList = (orderlist) => ajax(BASE_URL+'/orderlist/add',{orderlist},'POST')
 /**
@@ -45,6 +46,9 @@ export const reqShopRatings = () => ajax('/ratings')
  * 获取商家图书分类
  */
 export const reqClassBooks = () => ajax(BASE_URL+'/book/getBookInfo')
+
+// 12、获取订单列表
+export const reOrderList = (userId) => ajax(BASE_URL + '/orderlist/getOrderListByUserId', {userId})
 
 /**
  * 获取商家图书数组

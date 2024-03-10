@@ -103,6 +103,10 @@
   import { MessageBox, Toast } from 'mint-ui'
   import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
   export default {
+    mounted(){
+      this.$store.dispatch('getUserInfo')
+      console.log(this.userInfo)
+    },
     computed: {
       ...mapState(['userInfo'])
     },

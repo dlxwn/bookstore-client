@@ -69,9 +69,10 @@
       }
     },
     mounted () {
-
       this.$store.dispatch('getCategorys')
+      console.log(this.categorys)
       this.$store.dispatch('getShops')
+      console.log(this.userInfo)
       this.$store.dispatch('getShopBooks')
     },
 

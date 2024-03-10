@@ -97,10 +97,10 @@
             "orderDate": Date.now()
           }
           let result = await sendOrderList(orderlist)
-          if (result.code === 0){
-            alert("提交成功")
+          if (result.code === 200){
+            alert("创建订单成功")
           } else{
-            alert("提交失败")
+            alert("创建订单失败")
           }
 
         }else{

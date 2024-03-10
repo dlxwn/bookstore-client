@@ -15,19 +15,19 @@
               <input type="email" maxlength="20" placeholder="邮箱" v-model="z_email">
             </section>
             <section class="login_verification">
-              <input type="text" maxlength="10" placeholder="用户名" v-model="z_user">
+              <input type="text" maxlength="10" placeholder="用户名" v-model="nickName">
             </section>
             <section class="login_verification">
-              <input type="tel" maxlength="11" placeholder="电话" v-model="z_tel">
+              <input type="tel" maxlength="11" placeholder="电话" v-model="phoneNumber">
             </section>
             <section class="login_verification">
-              <input type="password" maxlength="16" placeholder="密码" v-model="z_pass">
+              <input type="password" maxlength="16" placeholder="密码" v-model="userPassword">
             </section>
             <section class="login_verification">
-              <input type="text" maxlength="10" placeholder="真实姓名" v-model="z_name">
+              <input type="text" maxlength="10" placeholder="真实姓名" v-model="name">
             </section>
             <section class="login_verification">
-              <input type="text" maxlength="8" placeholder="性别" v-model="z_sex">
+              <input type="text" maxlength="8" placeholder="性别" v-model="sex">
             </section>
             <section class="login_hint">
               温馨提示：未注册网上书店帐号的手机号，登录时将自动注册，且代表已同意
@@ -49,7 +49,7 @@
               </section>
               <section class="login_message">
                 <input type="text" maxlength="11" placeholder="验证码" v-model="verCode">
-                <img class="get_verification" src="http://localhost:8088/bookstore/user/verCode" alt="verCode"
+                <img class="get_verification" src="http://localhost:8087/bookstore/user/verCode" alt="verCode"
                   @click="getVerCode" ref="verCode">
               </section>
             </section>
@@ -84,11 +84,11 @@
         alertShow: false, // 是否显示警告框
         // 注册的部分
         z_email: '',
-        z_user: '',
-        z_tel: '',
-        z_pass: '',
-        z_name: '',
-        z_sex: ''
+        nickName: '',
+        phoneNumber: '',
+        userPassword: '',
+        name: '',
+        sex: ''
       }
     },
 
@@ -136,85 +136,88 @@
       // 异步登陆
       async login () {
         if(!this.loginWay){
-        let result
-          const {email, password, verCode} = this
-          // console.log('hahahhahahahahhahahha', email, 'jjjjjjjjjjjjj', password, ' jggjgghggg' , verCode)
-          if(!this.email) {
-            // 用户名必须指定
-            this.showAlert('请输入邮箱!')
-            return
-          } else if(!this.password) {
-            // 密码必须指定
-            this.showAlert('请输入密码！')
-            return
-          } else if(!this.verCode) {
-            // 验证码必须指定
-            this.showAlert('请输入验证码！')
-            return
+          let result
+            const {email, password, verCode} = this
+            // console.log('hahahhahahahahhahahha', email, 'jjjjjjjjjjjjj', password, ' jggjgghggg' , verCode)
+            if(!this.email) {
+              // 用户名必须指定
+              this.showAlert('请输入邮箱!')
+              return
+            } else if(!this.password) {
+              // 密码必须指定
+              this.showAlert('请输入密码！')
+              return
+            } else if(!this.verCode) {
+              // 验证码必须指定
+              this.showAlert('请输入验证码！')
+              return
+            }
+            // 发送ajax请求密码登陆
+            result = await reqPwdLogin(email, password, verCode)
+          // 停止计时
+          if(this.computeTime) {
+            this.computeTime = 0
+            clearInterval(this.intervalId)
+            this.intervalId = undefined
           }
-          // 发送ajax请求密码登陆
-          result = await reqPwdLogin(email, password, verCode)
-        // 停止计时
-        if(this.computeTime) {
-          this.computeTime = 0
-          clearInterval(this.intervalId)
-          this.intervalId = undefined
-        }
-        // 根据结果数据处理
-        if(result.code===0) {
-          const user = result.data
-          // 将user保存到vuex的state
-          this.$store.dispatch('recordUser', user)
-          // 去个人中心界面
-          this.$router.replace('/profile')
-        } else {
-          // 显示新的图片验证码
-          this.getVerCode()
-          // 显示警告提示
-          const msg = result.msg
-          this.showAlert(msg)
-        }
-      } else {    //注册的页面
-        let result
-          const {z_email, z_user, z_tel, z_pass, z_name, z_sex} = this
-          if(!this.z_email) {
-            // 用户名必须指定
-            this.showAlert('请输入邮箱!')
-            return
-          }else if(!this.z_user) {
-            // 密码必须指定
-            this.showAlert('请输入用户名！')
-            return
-          } else if(!this.z_tel) {
-            // 验证码必须指定
-            this.showAlert('请输入电话！')
-            return
-          } else if(!this.z_pass) {
-            this.showAlert('请输入密码')
-            return
-          } else if(!this.z_name) {
-            this.showAlert('请输入真实姓名')
-            return
-          } else if(!this.z_sex) {
-            this.showAlert('请输入性别')
-            return
-          }
-          // 用ajsx传值进行注册，注册成功之后自动登陆
-          result = await reqRegLogin(z_email, z_user, z_tel, z_pass, z_name, z_sex)
-
           // 根据结果数据处理
-          if(result.code===0) {
-            const user = result.data
+          console.log(result)
+          if(result.code === 200) {
+            const user = result.user
+            console.log(user)
             // 将user保存到vuex的state
             this.$store.dispatch('recordUser', user)
             // 去个人中心界面
             this.$router.replace('/profile')
           } else {
+            // 显示新的图片验证码
+            this.getVerCode()
             // 显示警告提示
             const msg = result.msg
             this.showAlert(msg)
           }
-      }
+        } else {    //注册的页面
+          let result
+            const {z_email, nickName, phoneNumber, userPassword, name, sex} = this
+            if(!this.z_email) {
+              // 用户名必须指定
+              this.showAlert('请输入邮箱!')
+              return
+            }else if(!this.nickName) {
+              // 密码必须指定
+              this.showAlert('请输入用户名！')
+              return
+            } else if(!this.phoneNumber) {
+              // 验证码必须指定
+              this.showAlert('请输入电话！')
+              return
+            } else if(!this.userPassword) {
+              this.showAlert('请输入密码')
+              return
+            } else if(!this.name) {
+              this.showAlert('请输入真实姓名')
+              return
+            } else if(!this.sex) {
+              this.showAlert('请输入性别')
+              return
+            }
+            // 用ajsx传值进行注册，注册成功之后自动登陆
+            result = await reqRegLogin(z_email, nickName, phoneNumber, userPassword, name, sex)
+
+            // 根据结果数据处理
+            if(result.code === 200) {
+              const user = result.user
+              // 将user保存到vuex的state
+              this.$store.dispatch('recordUser', user)
+              
+              // 去个人中心界面
+              this.$router.replace('/profile')
+            } else {
+              // 显示警告提示
+              const msg = result.msg
+              this.showAlert(msg)
+            }
+        }
       },
       // 关闭警告框
       closeTip () {
@@ -224,7 +227,7 @@
       // 获取一个新的图片验证码
       getVerCode () {
         // 每次指定的src要不一样
-        this.$refs.verCode.src = 'http://localhost:8088/bookstore/user/verCode?time='+Date.now()
+        this.$refs.verCode.src = 'http://localhost:8087/bookstore/user/verCode?time='+Date.now()
       }
     },
 

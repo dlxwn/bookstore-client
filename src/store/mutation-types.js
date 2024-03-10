@@ -20,6 +20,8 @@ export const CLEAR_CART = 'clear_cart' // 清空购物车
 export const RECEIVE_SEARCH_SHOPS = 'receive_search_shops' // 接收搜索的商家数组
 export const RECEIVE_CLASS_BOOKS = 'receive_class_books' // 接收分类的图书数组
 
+export const RECEIVE_ORDERS = 'receive_orders'  // 接收用户订单数组
+
 
 
 

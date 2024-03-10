@@ -16,7 +16,9 @@ import {
   RECEIVE_SEARCH_SHOPS,
   RECEIVE_BOOKS,
   RECEIVE_BOOKINFO,
-  RECEIVE_CLASS_BOOKS
+  RECEIVE_CLASS_BOOKS,
+  RECEIVE_ORDER,
+  RECEIVE_ORDERS
 } from './mutation-types'
 import {
   reqAddress,
@@ -30,7 +32,8 @@ import {
   reqSearchShop,
   reqShopBooks,
   reqBookInfo,
-  reqClassBooks
+  reqClassBooks,
+  reOrderList
 } from '../api'
 
 export default {
@@ -46,7 +49,7 @@ export default {
     }
   },
 
-  // 异步获取食品分类列表
+  // 异步获取图书分类列表
   async getCategorys({commit}) {
     // 发送异步ajax请求
     const result = await reqFoodCategorys()
@@ -156,7 +159,6 @@ export default {
 
   // 异步获取搜索列表
   async searchShops({commit, state}, keyword) {
-
     const result = await reqSearchShop( keyword)
     if (result.code === 0) {
       const searchShops = result.data
@@ -165,11 +167,18 @@ export default {
   },
   // 异步获取图书分类列表
   async getClassBooks({commit}, callback) {
-
     const result = await reqClassBooks()
     const classbooks = result
     commit(RECEIVE_CLASS_BOOKS, {classbooks})
     // 数据更新了, 通知一下组件
         callback && callback()
   },
+  // 异步获取订单列表
+  async getOrderByUserId({commit}, userId) {
+    const result = await reOrderList(userId)
+    if(result.code === 200) {
+      const orders = result.data
+      commit(RECEIVE_ORDERS, {orders})
+    }
+  }
 }

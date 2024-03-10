@@ -1,52 +1,72 @@
 <template>
   <div class="shop_container">
-    <ul class="shop_list" v-if="books.length">
-      <li class="shop_li border-1px" v-for="(book, index) in books"
-          :key="index" @click="getBookinfo(book.isbn)">
+    <ul class="shop_list" v-if="orders.length">
+      <li class="shop_li border-1px" v-for="(order, index) in orders"
+          :key="index" @click="getOrderDetail(order.orderId)">
         <a>
-          <div class="shop_left">
+          <!-- <div class="shop_left">
             <img class="shop_img" :src="book.bookPicture">
-          </div>
+          </div> -->
           <div class="shop_right">
             <section class="shop_detail_header">
-              <h4 class="shop_title ellipsis">{{book.bookName}}</h4>
-              <ul class="shop_detail_ul">
-                <li class="supports" v-for="item in 3" :key="index">
-                  {{item}}
-                </li>
-              </ul>
-            </section>
-            <section class="shop_rating_order">
-              <section class="shop_rating_order_left">
-                <Star :score="3" :size="24"/>
-                <div class="rating_section">
-                  {{book.cllectNum}}
-                </div>
-                <div class="order_section">
-                  月售{{book.saleNum}}单
-                </div>
-              </section>
-              <section class="shop_rating_order_right">
-                <span class="delivery_style delivery_right">{{book.bookType}}</span>
-              </section>
-            </section>
-            <section class="shop_distance">
-              <p class="shop_delivery_msg">
-                <span>价格¥{{book.price}}</span>
-                <span class="segmentation">/</span>
-                <span>配送费¥0</span>
+              <h4 class="shop_title ellipsis">{{order.orderId}}</h4>
+              <p class="order_price">
+                  <span>价格¥{{order.amount}}</span>
               </p>
             </section>
+            <section class="shop_rating_order">
+              <section class="shop_distance">
+                <div class="order_name">
+                  下单人姓名：{{order.orderName}}
+                  <div class="order_tel ">
+                    电话：{{order.orderTel}}
+                  </div>
+                </div>
+                <div class="order_status">
+                    {{order.status == 0 ?'未支付' : '已支付'}}
+                </div>
+              </section>
+              <section class="shop_distance">
+                <div class="order_address"> 地址：{{order.orderAddress}}</div>
+              </section>
+              <section class="shop_rating_order_left">
+                
+                
+              </section>
+              <!-- <section class="shop_distance">
+                
+              </section> -->
+              <div class="rating_section order_time">
+                  下单时间：{{order.orderDate}}
+              </div>
+              
+            </section>
+            
           </div>
         </a>
       </li>
     </ul>
-    <ul v-else>
-      <li v-for="item in 6">
-        <img src="./images/shop_back.svg" alt="back">
-      </li>
-    </ul>
+    <!-- <div class="content">
+      <van-tabs color="#ffc400">
+        <van-tab v-for="(order, index) in orders" :key="index" :title="order">
+          <div
+            v-for="(i, ind) in store.state.orderListed"
+            :key="ind"
+            v-if="item == '全部' && store.state.orderListed.length"
+          >
+            <van-card
+              :num="i.num"
+              :price="i.price"
+              :title="i.title"
+              :thumb="i.pic"
+            />
+          </div>
+          <Blank v-else />
+        </van-tab>
+      </van-tabs>
+    </div> -->
   </div>
+  
 </template>
 
 <script>
@@ -56,25 +76,25 @@
   export default {
     data () {
       return {
-        isbn:'',
+        orderId:'',
         baseImgUrl: 'http://cangdu.org:8001/img/'
       }
     },
     mounted(){
-      console.log("shopList")
-      console.log(this.books)
+      console.log("进来了OrderList")
+      console.log(this.orders)
     },
     methods: {
-      getBookinfo (isbn) {
-        if(isbn) {
-          this.$store.dispatch('getBookInfo',isbn)
-          this.$router.push('/shop')
-        }
-      }
+      // getOrderListByUserId (userId) {
+      //   if(userId) {
+      //     this.$store.dispatch('getOrderByUserId',userId)
+      //   }
+      // }
     },
     computed: {
       ...mapState(['shops']),
-      ...mapState(['books'])
+      ...mapState(['orders']),
+      ...mapState(['userInfo'])
     },
     components: {
       Star
@@ -99,7 +119,7 @@
           .shop_left
             float left
             box-sizing border-box
-            width 23%
+            
             height 75px
             padding-right 10px
             .shop_img
@@ -108,7 +128,7 @@
               height 100%
           .shop_right
             float right
-            width 77%
+            width 100%
             .shop_detail_header
               clearFix()
               width 100%
@@ -116,11 +136,11 @@
                 float left
                 width 200px
                 color #333
-                font-size 16px
+                font-size 11px
                 line-height 16px
                 font-weight 700
                 &::before
-                  content '精品'
+                  content '订单编号：'
                   display inline-block
                   font-size 11px
                   line-height 11px
@@ -142,7 +162,7 @@
             .shop_rating_order
               clearFix()
               width 100%
-              margin-top 18px
+              margin-top 8px
               margin-bottom 8px
               .shop_rating_order_left
                 float left
@@ -154,7 +174,7 @@
                   margin-left 4px
                 .order_section
                   float left
-                  font-size 10px
+                  font-size 13px
                   color #666
                   transform scale(.8)
               .shop_rating_order_right
@@ -180,10 +200,31 @@
               width 100%
               font-size 12px
               .shop_delivery_msg
-                float left
+                float right
                 transform-origin 0
                 transform scale(.9)
                 color #666
               .segmentation
                 color #ccc
+      .order_time
+        font-size: 12px
+        float: right
+      .order_name
+        font-size: 12px
+        float left
+      .order_tel
+        font-size: 12px
+        float right
+        margin-left: 20px
+      .order_address
+        float: left
+        font-size: 12px
+        margin-top: 5px
+        margin-left: 3px
+      .order_price
+        float: right
+        font-size: 12px
+      .order_status
+        float: right
+        font-size: 12px
 </style>

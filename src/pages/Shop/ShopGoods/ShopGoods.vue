@@ -72,6 +72,7 @@
     mounted() {
       this.$store.dispatch('getCategorys')
       this.$store.dispatch('getShopInfo')
+      console.log(this.userInfo)
       this.$store.dispatch('getClassBooks', () => {// 数据更新后执行
         this.$nextTick(() => { // 列表数据更新显示后执行
 

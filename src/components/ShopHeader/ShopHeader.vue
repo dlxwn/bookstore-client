@@ -115,6 +115,8 @@
   export default {
     data () {
       return {
+        backgroundImage:'http://s9vf5jis6.hn-bkt.clouddn.com/img/pic.jpg',
+        avatar:'./images/pic.jpg',
         supportClasses: ['activity-green', 'activity-red', 'activity-orange'],
         shopShow: false,
         supportShow: false

@@ -6,42 +6,54 @@
       <h3>登录后查看图书订单</h3>
       <button @click="to_login">立即登陆</button>
     </section>
-    <section style="width: 100%; margin-top: 40px;" v-else>
-      <mt-cell title="订单编号:" >01</mt-cell>
-      <mt-cell title="购买物品:" >克隆版大脑</mt-cell>
-      <mt-cell title="购买数量:" >10</mt-cell>
-      <mt-cell title="购买单价(元):" >29.1</mt-cell>
-      <mt-cell title="总价格(元):" >291</mt-cell>
-      <p style="color: #6AC20B;">--------------------华丽的分割线--------------------</p>
-      <mt-cell title="订单编号:" >02</mt-cell>
-      <mt-cell title="购买物品:" >十万个为什么</mt-cell>
-      <mt-cell title="购买数量:" >1</mt-cell>
-      <mt-cell title="购买单价(元):" >33.1</mt-cell>
-      <mt-cell title="总价格(元):" >33.1</mt-cell>
-      <p style="color: #6AC20B;">--------------------华丽的分割线--------------------</p>
-      <mt-cell title="订单编号:" >03</mt-cell>
-      <mt-cell title="购买物品:" >一千零一夜</mt-cell>
-      <mt-cell title="购买数量:" >2</mt-cell>
-      <mt-cell title="购买单价(元):" >19.8</mt-cell>
-      <mt-cell title="总价格(元):" >39.6</mt-cell>
-      <br /><br /><br />
-    </section>
+    <br><br><br>
+    <OrderList/>
+  
   </section>
 </template>
 
 <script>
   import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+  import OrderList from '../../components/Order/OrderList.vue'
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
 
   export default {
+    data () {
+      return {
+        orderList: [],
+        userId: ''
+      }
+    },
+    created(){
+      console.log("zheli")
+    },
+    mounted() {
+      this.$store.dispatch('getUserInfo')
+      console.log("有吗有啊")
+      console.log(this.userInfo)
+      this.getOrderByUserId(this.userInfo)
+      console.log("orders")
+      console.log(this.orders)
+    },
     computed: {
       ...mapState(['userInfo']),
+      ...mapState(['orders'])
     },
     components: {
-      HeaderTop
+      HeaderTop,
+      OrderList
     },
     methods: {
+      getOrderByUserId(userInfo) {
+        console.log("进来了getOrderByUserId")
+        console.log(userInfo)
+        if(userInfo.userId) {
+          console.log("进来if了吗")
+          console.log(userInfo.userId)
+          this.$store.dispatch('getOrderByUserId',userInfo.userId)
+        }
+      },
       to_login(){
         this.$router.replace('/login')
       }

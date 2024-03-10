@@ -17,7 +17,8 @@ import {
   RECEIVE_SEARCH_SHOPS,
   RECEIVE_BOOKS,
   RECEIVE_BOOKINFO,
-  RECEIVE_CLASS_BOOKS
+  RECEIVE_CLASS_BOOKS,
+  RECEIVE_ORDERS
 } from './mutation-types'
 
 export default {
@@ -98,4 +99,8 @@ export default {
   [RECEIVE_CLASS_BOOKS](state, {classbooks}) {
     state.classbooks = classbooks
   },
+
+  [RECEIVE_ORDERS](state, {orders}) {
+    state.orders = orders
+  }
 }
